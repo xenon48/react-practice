@@ -1,9 +1,14 @@
 .item {
     color: rgb(107, 20, 20);
+    padding: 10px;
 }
 
 .item img {
     width: 45px;
     height: 45px;
     border-radius: 30px;
+}
+
+.item button {
+    margin-left: 50px;
 }

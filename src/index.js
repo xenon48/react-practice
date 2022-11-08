@@ -11,8 +11,8 @@ export let renderPage = function () {
   root.render(
     <React.StrictMode>
       <App state={store.getState()}
-        addPost={store.addPost.bind(store)}
-        changeNewPostText={store.changeNewPostText.bind(store)} />
+        dispatch={store.dispatch.bind(store)}
+        deletePost={store.deletePost.bind(store)}/>
     </React.StrictMode>
   );
 }

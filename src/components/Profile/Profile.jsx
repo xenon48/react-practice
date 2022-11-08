@@ -10,8 +10,8 @@ const Profile = function (props) {
             <MyPosts
                 postsData={props.profilePage.posts}
                 textOnTextarea={props.profilePage.textOnTextarea}
-                addPost={props.addPost}
-                changeNewPostText={props.changeNewPostText} />
+                dispatch={props.dispatch}
+                deletePost={props.deletePost}/>
         </div>
     )
 }

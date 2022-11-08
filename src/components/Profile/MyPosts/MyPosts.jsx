@@ -1,22 +1,25 @@
 import React from 'react';
+import { addPostActionCreator, onPostChangeCreator } from '../../../redux/state';
 import classes from './MyPosts.module.css';
 import Post from './Post/Post';
 
-const MyPosts = function (props) {
 
-    let onPostChange = function () {
-        let text = newPostText.current.value;
-        props.changeNewPostText(text);
-    }
+
+const MyPosts = function (props) {
 
     let newPostText = React.createRef(); // переменная для данных из textarea
 
+    let onPostChange = function () {
+        let text = newPostText.current.value;
+        props.dispatch(onPostChangeCreator(text));
+    }
+
     let addPost = function () { // слушатель кнопки добавления поста
-        props.addPost()
+        props.dispatch(addPostActionCreator());
     }
 
     let postsData = props.postsData.map((el) => (
-        <Post message={el.text} likes={el.likesqty} />
+        <Post message={el.text} likes={el.likesqty} id={el.id} deletePost={props.deletePost} />
     ));
 
 
