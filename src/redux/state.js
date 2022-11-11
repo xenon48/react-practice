@@ -1,10 +1,6 @@
-const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
-
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
-const ADD_MESSAGE = 'ADD-MESSAGE';
-
-
+import { dialogsReducer } from "./dialogsReducer";
+import { profileReducer } from "./profileReducer";
+import { sidebarReducer } from "./sidebarReducer";
 
 let store = {
     _state: { // данные
@@ -25,6 +21,10 @@ let store = {
             textOnTextarea: '',
         },
 
+        sidebar:{
+
+        },
+
         profilePage: {
             posts: [
                 { id: 1, text: 'post...1', likesqty: 56 },
@@ -33,9 +33,6 @@ let store = {
             textOnTextarea: '',
         }
     }, // конец данных
-
-    idCounter: 3,
-
 
 
     getState() {
@@ -50,78 +47,13 @@ let store = {
         console.log('Rerendered')
     },
 
-    deletePost(id) {
-        let index;
-        for (let i = 0; i < this._state.profilePage.posts.length; i++) {
-            if (this._state.profilePage.posts[i].id == id) index = i;
-        }
-        this._state.profilePage.posts.splice(index, 1);
-        this._callSubscriber();
-    },
-
     dispatch(action) {
-        if (action.type == ADD_POST) { // метод добавления поста
-            this.idCounter += 1;
-            let id = this.idCounter;
-            let text = this._state.profilePage.textOnTextarea;
-            let newPost = {
-                id: id,
-                text: text,
-                likesqty: 0
-            }
-            this._state.profilePage.posts.push(newPost);
-            this._state.profilePage.textOnTextarea = '';
-            this._callSubscriber()
-        }
 
-        else if (action.type == UPDATE_NEW_POST_TEXT) { // метод-слушатель текстового поля добавления новых постов 
-            this._state.profilePage.textOnTextarea = action.text;
-            this._callSubscriber()
-        }
-
-        else if (action.type == UPDATE_NEW_MESSAGE_TEXT) { // метод-слушатель текстового поля добавления новых сообщений 
-            this._state.messagesPage.textOnTextarea = action.text;
-            this._callSubscriber()
-        }
-
-        else if (action.type == ADD_MESSAGE) { //  
-            let text = this._state.messagesPage.textOnTextarea;
-            this._state.messagesPage.textOnTextarea = '';
-            let newMessage = {
-                id: 6, 
-                message: text
-            }
-            this._state.messagesPage.messages.push(newMessage);
-            this._callSubscriber();
-        }
-
-    },
-}
-
-export const addPostActionCreator = function () {
-    return ({
-        type: ADD_POST
-    })
-}
-
-export const onPostChangeCreator = function (text) {
-    return ({
-        type: UPDATE_NEW_POST_TEXT,
-        text: text
-    })
-}
-
-export const onMessageChangeCreator = function (text) {
-    return ({
-        type: UPDATE_NEW_MESSAGE_TEXT,
-        text: text
-    })
-}
-
-export const addMessageActionCreator = function () {
-    return ({
-        type: ADD_MESSAGE
-    })
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.messagesPage = dialogsReducer(this._state.messagesPage, action);
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action);
+        this._callSubscriber(); // оповещение слушателя об ререндере страницы
+    }
 }
 
 export default store;
