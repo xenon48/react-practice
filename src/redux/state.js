@@ -1,6 +1,9 @@
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 
+const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
+const ADD_MESSAGE = 'ADD-MESSAGE';
+
 
 
 let store = {
@@ -18,7 +21,8 @@ let store = {
                 { id: 2, message: 'text...2' },
                 { id: 3, message: 'text...3' },
                 { id: 4, message: 'text...4' },
-                { id: 5, message: 'text...5' }]
+                { id: 5, message: 'text...5' },],
+            textOnTextarea: '',
         },
 
         profilePage: {
@@ -56,7 +60,7 @@ let store = {
     },
 
     dispatch(action) {
-        if (action.type == 'ADD-POST') { // метод добавления поста
+        if (action.type == ADD_POST) { // метод добавления поста
             this.idCounter += 1;
             let id = this.idCounter;
             let text = this._state.profilePage.textOnTextarea;
@@ -75,11 +79,27 @@ let store = {
             this._callSubscriber()
         }
 
+        else if (action.type == UPDATE_NEW_MESSAGE_TEXT) { // метод-слушатель текстового поля добавления новых сообщений 
+            this._state.messagesPage.textOnTextarea = action.text;
+            this._callSubscriber()
+        }
+
+        else if (action.type == ADD_MESSAGE) { //  
+            let text = this._state.messagesPage.textOnTextarea;
+            this._state.messagesPage.textOnTextarea = '';
+            let newMessage = {
+                id: 6, 
+                message: text
+            }
+            this._state.messagesPage.messages.push(newMessage);
+            this._callSubscriber();
+        }
+
     },
 }
 
 export const addPostActionCreator = function () {
-    return ({  
+    return ({
         type: ADD_POST
     })
 }
@@ -88,6 +108,19 @@ export const onPostChangeCreator = function (text) {
     return ({
         type: UPDATE_NEW_POST_TEXT,
         text: text
+    })
+}
+
+export const onMessageChangeCreator = function (text) {
+    return ({
+        type: UPDATE_NEW_MESSAGE_TEXT,
+        text: text
+    })
+}
+
+export const addMessageActionCreator = function () {
+    return ({
+        type: ADD_MESSAGE
     })
 }
 
