@@ -6,7 +6,7 @@ import classes from './Post.module.css';
 const Post = function (props) {
 
     let deletePost = function () {
-        props.dispatch(deletePostActionCreator(props.id));
+        props.deletePost(props.id)
     }
 
     return (

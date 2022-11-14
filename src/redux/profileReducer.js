@@ -1,13 +1,20 @@
-import store from "./state";
+import store from "./store";
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const DELETE_POST = 'DELETE-POST';
 
+let initialState = {
+    posts: [
+        { id: 1, text: 'post...1', likesqty: 56 },
+        { id: 2, text: 'post...2', likesqty: 58 },
+        { id: 3, text: 'post...3', likesqty: 10 }],
+    textOnTextarea: '',
+}
 
-let idCounter = 3;
+let idCounter = initialState.posts.length;
 
-export const profileReducer = function (state, action) {
+export const profileReducer = function (state = initialState, action) {
 
     switch (action.type) {
 
@@ -52,7 +59,7 @@ export const deletePostActionCreator = function (id) {
     })
 }
 
-export const onPostChangeCreator = function (text) {
+export const onPostChangeActionCreator = function (text) {
     return ({
         type: UPDATE_NEW_POST_TEXT,
         text: text

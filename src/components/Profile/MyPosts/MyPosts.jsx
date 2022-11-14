@@ -11,15 +11,15 @@ const MyPosts = function (props) {
 
     let onPostChange = function () {
         let text = newPostText.current.value;
-        props.dispatch(onPostChangeCreator(text));
+        props.updateTextarea(text);
     }
 
     let addPost = function () { // слушатель кнопки добавления поста
-        props.dispatch(addPostActionCreator());
+        props.addPost();
     }
 
-    let postsData = props.postsData.map((el) => (
-        <Post message={el.text} likes={el.likesqty} id={el.id} dispatch={props.dispatch} />
+    let postsData = props.posts.map((el) => (
+        <Post message={el.text} likes={el.likesqty} id={el.id} deletePost={props.deletePost} />
     ));
 
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import MyPosts from './MyPosts/MyPosts';
+import MyPostsContainer from './MyPosts/MyPostsContainer';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 
 
@@ -7,10 +8,8 @@ const Profile = function (props) {
     return (
         <div>
             <ProfileInfo />
-            <MyPosts
-                postsData={props.profilePage.posts}
-                textOnTextarea={props.profilePage.textOnTextarea}
-                dispatch={props.dispatch}/>
+            <MyPostsContainer
+                store={props.store}/>
         </div>
     )
 }
