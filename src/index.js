@@ -10,9 +10,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 export let renderPage = function () {
   root.render(
     <React.StrictMode>
-      <App state={store.getState()}
-        store={store}
-        dispatch={store.dispatch.bind(store)}/>
+      <App />
     </React.StrictMode>
   );
 }
