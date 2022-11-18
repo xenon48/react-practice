@@ -25,22 +25,30 @@ export const profileReducer = function (state = initialState, action) {
                 id: idCounter,
                 text: text,
                 likesqty: 0
-            }
-            state.posts.push(newPost);
-            state.textOnTextarea = '';
-            return state;
+            };
+            return {
+                ...state,
+                posts: [...state.posts, newPost],
+                textOnTextarea: '',
+            };
 
         case UPDATE_NEW_POST_TEXT:
-            state.textOnTextarea = action.text;
-            return state;
+            return {
+                ...state,
+                textOnTextarea: action.text,
+            };
 
         case DELETE_POST:
             let index;
             for (let i = 0; i < state.posts.length; i++) {
                 if (state.posts[i].id == action.id) index = i;
             }
-            state.posts.splice(index, 1);
-            return state;
+            let stateCopy = {
+                ...state,
+                posts: [...state.posts]
+            };
+            stateCopy.posts.splice(index, 1);
+            return stateCopy;
 
         default: return state;
     }

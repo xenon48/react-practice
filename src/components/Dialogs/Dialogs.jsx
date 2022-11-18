@@ -36,7 +36,7 @@ const Dialogs = function (props) {
                     <div><button onClick={sendMessageButton}>Send</button></div>
                 </div>
             </div>
-
+            
         </div>
     )
 }
