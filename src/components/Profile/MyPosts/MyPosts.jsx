@@ -22,7 +22,6 @@ const MyPosts = function (props) {
         <Post message={el.text} likes={el.likesqty} id={el.id} deletePost={props.deletePost} />
     ));
 
-
     return (
         <div className={classes.addingPosts}>
             <h3>MY POSTS</h3>

@@ -9,6 +9,7 @@ import Settings from './components/Settings/Settings';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import store from './redux/redux-store';
 import { Provider } from 'react-redux';
+import UsersContainer from './components/Users/UsersContainer';
 
 
 const App = function (props) {
@@ -24,6 +25,7 @@ const App = function (props) {
             <Route path="/profile" element={<Profile />} />
             <Route path="/news" element={<News />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/users" element={<UsersContainer />} />
           </Routes>
         </div>
       </div>
