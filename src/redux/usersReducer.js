@@ -2,16 +2,14 @@ const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET-USERS';
 
-let url = 'https://www.nicepng.com/png/detail/528-5280185_png-file-svg-windows-10-avatar-transparent.png'
-
 let initialState = {
-    // users: []
-    users: [
-        { id: 1, photo: url, followed: true, name: 'Name1', surname: 'Surname1', location: { city: 'City1', country: 'Country1' }, annotation: 'Annotation' },
-        { id: 2, photo: url, followed: true, name: 'Name2', surname: 'Surname2', location: { city: 'City2', country: 'Country2' }, annotation: 'Annotation2' },
-        { id: 3, photo: url, followed: false, name: 'Name3', surname: 'Surname3', location: { city: 'City3', country: 'Country3' }, annotation: 'Annotation3' },
-        { id: 4, photo: url, followed: false, name: 'Name4', surname: 'Surname4', location: { city: 'City4', country: 'Country3' }, annotation: 'Annotation3' },
-    ],
+    users: []
+    // users: [
+    //     { id: 1, photo: url, followed: true, name: 'Name1', surname: 'Surname1', location: { city: 'City1', country: 'Country1' }, annotation: 'Annotation' },
+    //     { id: 2, photo: url, followed: true, name: 'Name2', surname: 'Surname2', location: { city: 'City2', country: 'Country2' }, annotation: 'Annotation2' },
+    //     { id: 3, photo: url, followed: false, name: 'Name3', surname: 'Surname3', location: { city: 'City3', country: 'Country3' }, annotation: 'Annotation3' },
+    //     { id: 4, photo: url, followed: false, name: 'Name4', surname: 'Surname4', location: { city: 'City4', country: 'Country3' }, annotation: 'Annotation3' },
+    // ],
 }
 
 
@@ -46,7 +44,7 @@ export const usersReducer = function (state = initialState, action) {
             case SET_USERS:
                 return {
                     ...state,
-                    users: [...state.users, ...action.users]
+                    users: action.users
                 }
 
         default: return state;

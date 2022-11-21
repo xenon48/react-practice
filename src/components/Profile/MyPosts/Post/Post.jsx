@@ -1,5 +1,4 @@
 import React from 'react';
-import { deletePostActionCreator } from '../../../../redux/profileReducer';
 import classes from './Post.module.css';
 
 
