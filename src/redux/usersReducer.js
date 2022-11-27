@@ -5,12 +5,14 @@ const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET-USERS';
 const SET_CURR_PAGE = 'SET-CURR-PAGE'
 const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT'
+const VIEW_LOADING_ICON = 'VIEW-LOADING-ICON'
 
 let initialState = {
     users: [],
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 1,
+    isFetching: false,
     // users: [
     //     { id: 1, photo: url, followed: true, name: 'Name1', surname: 'Surname1', location: { city: 'City1', country: 'Country1' }, annotation: 'Annotation' },
     //     { id: 2, photo: url, followed: true, name: 'Name2', surname: 'Surname2', location: { city: 'City2', country: 'Country2' }, annotation: 'Annotation2' },
@@ -66,6 +68,12 @@ export const usersReducer = function (state = initialState, action) {
                 totalUsersCount: action.qty
             }
 
+        case VIEW_LOADING_ICON:
+            return {
+                ...state,
+                isFetching: action.isFetching
+            }
+
         default: return state;
     }
 }
@@ -106,3 +114,11 @@ export const setUsersCountActionCreator = function (qty) {
         qty: qty
     })
 }
+
+export const setFetchingActionCreator = function (isFetching) {
+    return ({
+        type: VIEW_LOADING_ICON,
+        isFetching: isFetching
+    })
+}
+
