@@ -32,7 +32,9 @@ export const dialogsReducer = function (state = initialState, action) {
             let text = state.textOnTextarea;
             return {
                 ...state,
-                messages: [...state.messages, { id: 6, message: text }]
+                textOnTextarea: '',
+                messages: [...state.messages, { id: 6, message: text }],
+            
             };
 
         default: return state;

@@ -1,9 +1,16 @@
+import { bindActionCreators } from "redux";
+
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET-USERS';
+const SET_CURR_PAGE = 'SET-CURR-PAGE'
+const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT'
 
 let initialState = {
-    users: []
+    users: [],
+    pageSize: 5,
+    totalUsersCount: 0,
+    currentPage: 1,
     // users: [
     //     { id: 1, photo: url, followed: true, name: 'Name1', surname: 'Surname1', location: { city: 'City1', country: 'Country1' }, annotation: 'Annotation' },
     //     { id: 2, photo: url, followed: true, name: 'Name2', surname: 'Surname2', location: { city: 'City2', country: 'Country2' }, annotation: 'Annotation2' },
@@ -41,15 +48,29 @@ export const usersReducer = function (state = initialState, action) {
             }
         }
 
-            case SET_USERS:
-                return {
-                    ...state,
-                    users: action.users
-                }
+        case SET_USERS:
+            return {
+                ...state,
+                users: action.users
+            }
+
+        case SET_CURR_PAGE:
+            return {
+                ...state,
+                currentPage: action.page
+            }
+
+        case SET_TOTAL_USERS_COUNT:
+            return {
+                ...state,
+                totalUsersCount: action.qty
+            }
 
         default: return state;
     }
 }
+
+
 
 export const followActionCreator = function (userId) {
     return ({
@@ -69,5 +90,19 @@ export const setUsersActionCreator = function (users) {
     return ({
         type: SET_USERS,
         users: users
+    })
+}
+
+export const setCurrentPageActionCreator = function (page) {
+    return ({
+        type: SET_CURR_PAGE,
+        page: page
+    })
+}
+
+export const setUsersCountActionCreator = function (qty) {
+    return ({
+        type: SET_TOTAL_USERS_COUNT,
+        qty: qty
     })
 }
