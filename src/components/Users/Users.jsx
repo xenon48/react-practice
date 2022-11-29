@@ -1,6 +1,7 @@
 import { React, Component } from 'react';
 import styles from './Users.module.css'
 import defaultPhoto from '../../assets/images/avatar_default.png';
+import { NavLink } from 'react-router-dom';
 
 
 let Users = function (props) {
@@ -25,9 +26,10 @@ let Users = function (props) {
                 props.users.map(el => (
                     <div key={el.id}>
                         <span>
-                            <div>
-                                <img src={(el.photos.small) === null ? defaultPhoto : el.photos.small} className={styles.usersPhoto} /></div>
-                            <div>
+                            <div><NavLink to={'/profile/' + el.id}>
+                                <img src={(el.photos.small) === null ? defaultPhoto : el.photos.small} className={styles.usersPhoto} />
+                                </NavLink></div>
+                                <div>
                                 {el.followed ? <button onClick={() => { props.unfollowClick(el.id) }}>Unfollow</button> : <button onClick={() => { props.followClick(el.id) }}>Follow</button>}
                             </div>
                         </span>
@@ -40,8 +42,8 @@ let Users = function (props) {
                         </span>
 
                     </div>))
-            }
-        </div>
+}
+        </div >
     )
 }
 

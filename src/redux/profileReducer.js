@@ -1,6 +1,7 @@
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const DELETE_POST = 'DELETE-POST';
+const SET_USER_PROFILE = 'SET-USER-PROFILE';
 
 let initialState = {
     posts: [
@@ -8,6 +9,7 @@ let initialState = {
         { id: 2, text: 'post...2', likesqty: 58 },
         { id: 3, text: 'post...3', likesqty: 10 }],
     textOnTextarea: '',
+    profile: null,
 }
 
 let idCounter = initialState.posts.length;
@@ -48,6 +50,12 @@ export const profileReducer = function (state = initialState, action) {
             stateCopy.posts.splice(index, 1);
             return stateCopy;
 
+        case SET_USER_PROFILE:
+            return {
+                ...state,
+                profile: action.profile,
+            };
+
         default: return state;
     }
 }
@@ -69,5 +77,12 @@ export const onPostChangeActionCreator = function (text) {
     return ({
         type: UPDATE_NEW_POST_TEXT,
         text: text
+    })
+}
+
+export const setUserProfileActionCreator = function (profile) {
+    return ({
+        type: SET_USER_PROFILE,
+        profile: profile
     })
 }
