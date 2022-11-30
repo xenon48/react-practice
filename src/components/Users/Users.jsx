@@ -10,7 +10,7 @@ let Users = function (props) {
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
 
     let pages = [];
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 25; i++) {
         pages.push(i);
     }
 
