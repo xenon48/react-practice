@@ -3,8 +3,8 @@ import { followActionCreator, setCurrentPageActionCreator, setUsersActionCreator
 import axios from 'axios';
 import { React, Component } from 'react';
 import Users from './Users';
-import preloader from '../../assets/images/preloader.svg';
 import Preloader from '../Common/Preloader/Preloader';
+import { getUsersRequest } from '../../api/api';
 
 
 class UsersContainer extends Component {
@@ -12,11 +12,12 @@ class UsersContainer extends Component {
     componentDidMount() {
 
         this.props.fetchingIconState(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+
+        getUsersRequest(this.props.currentPage, this.props.pageSize)
             .then((response) => {
+                this.props.setUsers(response.items);
+                this.props.setUsersCount(response.totalCount);
                 this.props.fetchingIconState(false)
-                this.props.setUsers(response.data.items);
-                this.props.setUsersCount(response.data.totalCount);
 
             });
     }
@@ -25,16 +26,16 @@ class UsersContainer extends Component {
         this.props.setCurrentPage(page)
         this.props.fetchingIconState(true)
 
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`)
+        getUsersRequest(page, this.props.pageSize)
             .then((response) => {
                 this.props.fetchingIconState(false)
-                this.props.setUsers(response.data.items);
+                this.props.setUsers(response.items);
             });
     }
 
     render() {
         return <>
-        {this.props.isFetching ? <Preloader/> : null}
+            {this.props.isFetching ? <Preloader /> : null}
             <Users totalUsersCount={this.props.totalUsersCount}
                 pageSize={this.props.pageSize}
                 currentPage={this.props.currentPage}
@@ -58,13 +59,13 @@ let mapStateToProps = function (state) {
 
 
 
-export default connect(mapStateToProps, 
-        {
-            followClick: followActionCreator,
-            unfollowClick:unfollowActionCreator,
-            setUsers: setUsersActionCreator,
-            setCurrentPage: setCurrentPageActionCreator,
-            setUsersCount: setUsersCountActionCreator,
-            fetchingIconState: setFetchingActionCreator,
-        })
-        (UsersContainer)
+export default connect(mapStateToProps,
+    {
+        followClick: followActionCreator,
+        unfollowClick: unfollowActionCreator,
+        setUsers: setUsersActionCreator,
+        setCurrentPage: setCurrentPageActionCreator,
+        setUsersCount: setUsersCountActionCreator,
+        fetchingIconState: setFetchingActionCreator,
+    })
+    (UsersContainer)
