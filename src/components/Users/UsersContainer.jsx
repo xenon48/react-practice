@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { followActionCreator, setCurrentPageActionCreator, setUsersActionCreator, unfollowActionCreator, setUsersCountActionCreator, setFetchingActionCreator } from '../../redux/usersReducer';
+import { followActionCreator, setCurrentPageActionCreator, setUsersActionCreator, unfollowActionCreator, setUsersCountActionCreator, setFetchingActionCreator, follProgressActionCreator } from '../../redux/usersReducer';
 import axios from 'axios';
 import { React, Component } from 'react';
 import Users from './Users';
@@ -42,6 +42,8 @@ class UsersContainer extends Component {
                 users={this.props.users}
                 unfollowClick={this.props.unfollowClick}
                 followClick={this.props.followClick}
+                follProgressChange={this.props.follProgressChange}
+                follProgress={this.props.follProgress}
                 onPageChanged={this.onPageChanged} />
         </>
     }
@@ -54,6 +56,7 @@ let mapStateToProps = function (state) {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
+        follProgress: state.usersPage.follProgress
     }
 }
 
@@ -67,5 +70,6 @@ export default connect(mapStateToProps,
         setCurrentPage: setCurrentPageActionCreator,
         setUsersCount: setUsersCountActionCreator,
         fetchingIconState: setFetchingActionCreator,
+        follProgressChange: follProgressActionCreator,
     })
     (UsersContainer)

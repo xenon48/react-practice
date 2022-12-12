@@ -6,6 +6,8 @@ const SET_USERS = 'SET-USERS';
 const SET_CURR_PAGE = 'SET-CURR-PAGE'
 const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT'
 const VIEW_LOADING_ICON = 'VIEW-LOADING-ICON'
+const FOLLOWING_PROGRESS = 'FOLLOWING-PROGRESS'
+
 
 let initialState = {
     users: [],
@@ -13,12 +15,7 @@ let initialState = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,
-    // users: [
-    //     { id: 1, photo: url, followed: true, name: 'Name1', surname: 'Surname1', location: { city: 'City1', country: 'Country1' }, annotation: 'Annotation' },
-    //     { id: 2, photo: url, followed: true, name: 'Name2', surname: 'Surname2', location: { city: 'City2', country: 'Country2' }, annotation: 'Annotation2' },
-    //     { id: 3, photo: url, followed: false, name: 'Name3', surname: 'Surname3', location: { city: 'City3', country: 'Country3' }, annotation: 'Annotation3' },
-    //     { id: 4, photo: url, followed: false, name: 'Name4', surname: 'Surname4', location: { city: 'City4', country: 'Country3' }, annotation: 'Annotation3' },
-    // ],
+    follProgress: []
 }
 
 
@@ -74,6 +71,14 @@ export const usersReducer = function (state = initialState, action) {
                 isFetching: action.isFetching
             }
 
+        case FOLLOWING_PROGRESS:
+            return {
+                ...state,
+                follProgress: action.follProgressStatus ?
+                    [...state.follProgress, action.userId] :
+                    state.follProgress.filter((id) => id != action.userId)
+            }
+
         default: return state;
     }
 }
@@ -119,6 +124,14 @@ export const setFetchingActionCreator = function (isFetching) {
     return ({
         type: VIEW_LOADING_ICON,
         isFetching: isFetching
+    })
+}
+
+export const follProgressActionCreator = function (follProgressStatus, userId) {
+    return ({
+        type: FOLLOWING_PROGRESS,
+        follProgressStatus: follProgressStatus,
+        userId: userId
     })
 }
 

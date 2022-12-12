@@ -32,19 +32,23 @@ let Users = function (props) {
                             </NavLink></div>
                             <div>
                                 {el.followed ?
-                                    <button onClick={() => {
+                                    <button disabled={props.follProgress.some( (id) => id === el.id)} onClick={() => {
+                                        props.follProgressChange(true, el.id);
                                         unfollowRequest(el.id).then((response) => {
                                                 if (response.resultCode == 0) {
                                                     props.unfollowClick(el.id)
                                                 }
+                                                props.follProgressChange(false, el.id);
                                             });
                                     }}>Unfollow</button>
                                     :
-                                    <button onClick={() => {
+                                    <button disabled={props.follProgress.some( (id) => id === el.id)} onClick={() => {
+                                        props.follProgressChange(true, el.id);
                                         followRequest(el.id).then((response) => {
                                                 if (response.resultCode == 0) {
                                                     props.followClick(el.id)
                                                 }
+                                                props.follProgressChange(false, el.id);
                                             });
                                     }}>Follow</button>}
                             </div>
@@ -53,8 +57,6 @@ let Users = function (props) {
                         <span>
                             <span><div>{el.name}</div>
                                 <div>{el.status}</div></span>
-                            <span><div>{"el.location.city"}</div>
-                                <div>{"el.location.country"}</div></span>
                         </span>
 
                     </div>))
