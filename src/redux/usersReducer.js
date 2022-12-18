@@ -1,4 +1,5 @@
 import { bindActionCreators } from "redux";
+import { followRequest, getUsersRequest, unfollowRequest } from "../api/api";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -135,3 +136,44 @@ export const follProgressActionCreator = function (follProgressStatus, userId) {
     })
 }
 
+
+
+export const getUsersThunkCreator = function (currentPage, pageSize) {
+    return function (dispatch) {
+
+        dispatch(setFetchingActionCreator(true));
+
+        getUsersRequest(currentPage, pageSize)
+            .then((response) => {
+                dispatch(setCurrentPageActionCreator(currentPage))
+                dispatch(setUsersActionCreator(response.items));
+                dispatch(setUsersCountActionCreator(response.totalCount));
+                dispatch(setFetchingActionCreator(false));
+
+            });
+    }
+}
+
+export const followThunkCreator = function (id) {
+    return function (dispatch) {
+        dispatch(follProgressActionCreator(true, id));
+        followRequest(id).then((response) => {
+            if (response.resultCode == 0) {
+                dispatch(followActionCreator(id));
+            }
+            dispatch(follProgressActionCreator(false, id));
+        });
+    }
+}
+
+export const unfollowThunkCreator = function (id) {
+    return function (dispatch) {
+        dispatch(follProgressActionCreator(true, id));
+        unfollowRequest(id).then((response) => {
+            if (response.resultCode == 0) {
+                dispatch(unfollowActionCreator(id));
+            }
+            dispatch(follProgressActionCreator(false, id));
+        });
+    }
+}

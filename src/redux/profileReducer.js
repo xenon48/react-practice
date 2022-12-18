@@ -1,3 +1,5 @@
+import { getProfileRequest } from "../api/api";
+
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const DELETE_POST = 'DELETE-POST';
@@ -85,4 +87,14 @@ export const setUserProfileActionCreator = function (profile) {
         type: SET_USER_PROFILE,
         profile: profile
     })
+}
+
+export const getProfileThunkCreator = function (id) {
+    return function (dispatch) {
+        if (!id) id = 2;
+        getProfileRequest(id)
+        .then((response) => {
+            dispatch(setUserProfileActionCreator(response))
+        });
+    }
 }

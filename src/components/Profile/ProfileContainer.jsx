@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setUserProfileActionCreator } from '../../redux/profileReducer';
+import { getProfileThunkCreator, setUserProfileActionCreator } from '../../redux/profileReducer';
 import Preloader from '../Common/Preloader/Preloader';
 import Profile from './Profile';
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -11,12 +11,12 @@ class ProfileContainer extends Component {
 
     componentDidMount() {
         let userId = this.props.param.userId
-        if (!userId) userId = 2;
-        axios.get('https://social-network.samuraijs.com/api/1.0/profile/' + userId)
-            .then((response) => {
-                console.log('GET')
-                this.props.setUserProfile(response.data);
-            });
+        this.props.setUserProfile(userId)
+        // if (!userId) userId = 2;
+        // axios.get('https://social-network.samuraijs.com/api/1.0/profile/' + userId)
+        //     .then((response) => {
+        //         this.props.setUserProfile(response.data);
+        //     });
     }
 
     render() {
@@ -55,4 +55,4 @@ function withRouter(ProfileContainer) {
     return ComponentWithRouterProp;
 }
 
-export default connect(mapStateToProps, { setUserProfile: setUserProfileActionCreator })(withRouter(ProfileContainer));
+export default connect(mapStateToProps, { setUserProfile: getProfileThunkCreator })(withRouter(ProfileContainer));

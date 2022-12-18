@@ -1,3 +1,6 @@
+import { authRequest } from "../api/api";
+
+
 const SET_USER_DATA = 'SET-USER-DATA';
 
 
@@ -30,6 +33,17 @@ export const setUserDataActionCreator = function (userId, email, login) {
         data: {userId, email, login}
 
     })
+}
+
+export const authMeThunkCreater = function() {
+    return function(dispatch) {
+        authRequest().then((response) => {
+            if (response.resultCode === 0) {
+                let {id, email, login} = response.data;
+                dispatch(setUserDataActionCreator(id, email, login));
+            } 
+        });
+    }
 }
 
 export default authReducer;
