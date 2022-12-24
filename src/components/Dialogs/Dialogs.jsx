@@ -1,4 +1,5 @@
 import React from 'react';
+import { Navigate } from 'react-router-dom';
 import classes from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
@@ -22,6 +23,8 @@ const Dialogs = function (props) {
         <Message text={el.message} />
     ));
 
+    if (!props.isAuth) return <Navigate to={'/login'}/>;
+
     return (
         <div className={classes.dialogs}>
 
@@ -36,7 +39,7 @@ const Dialogs = function (props) {
                     <div><button onClick={sendMessageButton}>Send</button></div>
                 </div>
             </div>
-            
+
         </div>
     )
 }

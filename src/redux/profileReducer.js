@@ -91,6 +91,7 @@ export const setUserProfileActionCreator = function (profile) {
 
 export const getProfileThunkCreator = function (id) {
     return function (dispatch) {
+        console.log(id)
         if (!id) id = 2;
         getProfileRequest(id)
         .then((response) => {

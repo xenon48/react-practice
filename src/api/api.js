@@ -36,7 +36,7 @@ export const authRequest = function () {
 }
 export const getProfileRequest = function (id) {
     return (
-        instance.get('https://social-network.samuraijs.com/api/1.0/profile/' + id)
+        instance.get('profile/' + id)
             .then(response => { return response.data })
     )
 }

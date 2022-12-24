@@ -3,6 +3,8 @@ import { unfollowThunkCreator, followActionCreator, setCurrentPageActionCreator,
 import { React, Component } from 'react';
 import Users from './Users';
 import Preloader from '../Common/Preloader/Preloader';
+import { withAuthRedirect } from '../../HOC/withAuthRedirect';
+import { compose } from 'redux';
 
 
 class UsersContainer extends Component {
@@ -54,17 +56,19 @@ let mapStateToProps = function (state) {
 
 
 
-export default connect(mapStateToProps,
-    {
-        getUsers: getUsersThunkCreator, 
-        followClick: followThunkCreator,
-        unfollowClick: unfollowThunkCreator,
-        // setUsers: setUsersActionCreator,
-        setCurrentPage: setCurrentPageActionCreator,
-        // setUsersCount: setUsersCountActionCreator,
-        // fetchingIconState: setFetchingActionCreator,
-        follProgressChange: follProgressActionCreator,
-        
+const connectCreator = function (Component) {
+    return connect(mapStateToProps,
+        {
+            getUsers: getUsersThunkCreator,
+            followClick: followThunkCreator,
+            unfollowClick: unfollowThunkCreator,
+            setCurrentPage: setCurrentPageActionCreator,
+            follProgressChange: follProgressActionCreator,
+        })
+        (Component)
+}
 
-    })
-    (UsersContainer)
+export default compose(
+    connectCreator,
+    withAuthRedirect
+)(UsersContainer)
