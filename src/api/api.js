@@ -14,6 +14,20 @@ export const getUsersRequest = function (currentPage = 1, pageSize = 10) {
     )
 }
 
+export const getStatus = function (id) {
+    return (
+        instance.get(`profile/status/` + id)
+            .then(response => { return response.data })
+    )
+}
+
+export const updateStatus = function (status) {
+    return (
+        instance.put(`profile/status/`, {status: status})
+            .then(response => { return response.data })
+    )
+}
+
 export const unfollowRequest = function (id) {
     return (
         instance.delete(`follow/${id}`)

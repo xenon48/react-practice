@@ -1,9 +1,10 @@
-import { getProfileRequest } from "../api/api";
+import { getProfileRequest, getStatus, updateStatus } from "../api/api";
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const DELETE_POST = 'DELETE-POST';
 const SET_USER_PROFILE = 'SET-USER-PROFILE';
+const SET_STATUS = 'SET-STATUS';
 
 let initialState = {
     posts: [
@@ -12,6 +13,7 @@ let initialState = {
         { id: 3, text: 'post...3', likesqty: 10 }],
     textOnTextarea: '',
     profile: null,
+    status: '',
 }
 
 let idCounter = initialState.posts.length;
@@ -58,6 +60,12 @@ export const profileReducer = function (state = initialState, action) {
                 profile: action.profile,
             };
 
+        case SET_STATUS:
+            return {
+                ...state,
+                status: action.status,
+            };
+
         default: return state;
     }
 }
@@ -89,13 +97,41 @@ export const setUserProfileActionCreator = function (profile) {
     })
 }
 
+export const setStatusActionCreator = function (status) {
+    return ({
+        type: SET_STATUS,
+        status: status
+    })
+}
+
+
 export const getProfileThunkCreator = function (id) {
     return function (dispatch) {
-        console.log(id)
-        if (!id) id = 2;
+        if (!id) id = 26994;
         getProfileRequest(id)
-        .then((response) => {
-            dispatch(setUserProfileActionCreator(response))
-        });
+            .then((response) => {
+                dispatch(setUserProfileActionCreator(response))
+            });
     }
 }
+
+export const getStatusThunkCreator = function (id) {
+    return function (dispatch) {
+        if (!id) id = 26994;
+        getStatus(id)
+            .then((response) => {
+                dispatch(setStatusActionCreator(response))
+            });
+    }
+}
+
+export const updateStatusThunkCreator = function (status) {
+    return function (dispatch) {
+        updateStatus(status)
+            .then((response) => {
+                if (response.resultCode === 0) {
+                dispatch(setStatusActionCreator(status))}
+            });
+    }
+}
+
