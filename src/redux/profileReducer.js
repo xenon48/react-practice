@@ -1,7 +1,6 @@
 import { getProfileRequest, getStatus, updateStatus } from "../api/api";
 
 const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const DELETE_POST = 'DELETE-POST';
 const SET_USER_PROFILE = 'SET-USER-PROFILE';
 const SET_STATUS = 'SET-STATUS';
@@ -11,7 +10,6 @@ let initialState = {
         { id: 1, text: 'post...1', likesqty: 56 },
         { id: 2, text: 'post...2', likesqty: 58 },
         { id: 3, text: 'post...3', likesqty: 10 }],
-    textOnTextarea: '',
     profile: null,
     status: '',
 }
@@ -24,7 +22,7 @@ export const profileReducer = function (state = initialState, action) {
 
         case ADD_POST:
             idCounter += 1;
-            let text = state.textOnTextarea;
+            let text = action.text;
             let newPost = {
                 id: idCounter,
                 text: text,
@@ -34,12 +32,6 @@ export const profileReducer = function (state = initialState, action) {
                 ...state,
                 posts: [...state.posts, newPost],
                 textOnTextarea: '',
-            };
-
-        case UPDATE_NEW_POST_TEXT:
-            return {
-                ...state,
-                textOnTextarea: action.text,
             };
 
         case DELETE_POST:
@@ -70,9 +62,10 @@ export const profileReducer = function (state = initialState, action) {
     }
 }
 
-export const addPostActionCreator = function () {
+export const addPostActionCreator = function (text) {
     return ({
-        type: ADD_POST
+        type: ADD_POST,
+        text: text
     })
 }
 
@@ -80,13 +73,6 @@ export const deletePostActionCreator = function (id) {
     return ({
         type: DELETE_POST,
         id: id
-    })
-}
-
-export const onPostChangeActionCreator = function (text) {
-    return ({
-        type: UPDATE_NEW_POST_TEXT,
-        text: text
     })
 }
 

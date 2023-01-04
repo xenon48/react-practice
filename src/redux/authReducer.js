@@ -1,4 +1,4 @@
-import { authRequest } from "../api/api";
+import { authRequest, loginRequest } from "../api/api";
 
 
 const SET_USER_DATA = 'SET-USER-DATA';
@@ -41,6 +41,16 @@ export const authMeThunkCreater = function() {
             if (response.resultCode === 0) {
                 let {id, email, login} = response.data;
                 dispatch(setUserDataActionCreator(id, email, login));
+            } 
+        });
+    }
+}
+
+export const loginThunkCreater = function(email, password, rememberMe) {
+    return function(dispatch) {
+        loginRequest(email, password, rememberMe).then((response) => {
+            if (response.resultCode === 0) {
+                
             } 
         });
     }

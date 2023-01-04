@@ -48,6 +48,23 @@ export const authRequest = function () {
             .then(response => { return response.data })
     )
 }
+
+export const loginRequest = function (email, password, rememberMe = false) {
+    return (
+        instance.post(`auth/login`, {email, password, rememberMe})
+            .then(response => { return response.data })
+    )
+}
+
+export const logoutRequest = function () {
+    return (
+        instance.delete(`auth/login`)
+            .then(response => { return response.data })
+    )
+}
+
+
+
 export const getProfileRequest = function (id) {
     return (
         instance.get('profile/' + id)

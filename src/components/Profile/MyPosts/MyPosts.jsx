@@ -1,21 +1,17 @@
 import React from 'react';
-import { addPostActionCreator, onPostChangeCreator } from '../../../redux/profileReducer';
 import classes from './MyPosts.module.css';
 import Post from './Post/Post';
+import { Field, reduxForm } from "redux-form";
+import { maxLengthCreator, required } from '../../../utils/validators/validators';
+import { Textarea } from '../../Common/FormsControls/FormsControls';
+
 
 
 
 const MyPosts = function (props) {
 
-    let newPostText = React.createRef(); // переменная для данных из textarea
-
-    let onPostChange = function () {
-        let text = newPostText.current.value;
-        props.updateTextarea(text);
-    }
-
-    let addPost = function () { // слушатель кнопки добавления поста
-        props.addPost();
+    let addPost = function (values) { // слушатель кнопки добавления поста
+        props.addPost(values.newPostBody);
     }
 
     let postsData = props.posts.map((el) => (
@@ -25,14 +21,24 @@ const MyPosts = function (props) {
     return (
         <div className={classes.addingPosts}>
             <h3>MY POSTS</h3>
-            <div><textarea onChange={onPostChange} ref={newPostText} value={props.textOnTextarea} placeholder='Enter new post...'/></div>
-            <div><button onClick={addPost}>Add Post</button></div>
-
+            <AddPostFormHOC onSubmit={addPost} />
             <div className={classes.posts}>
                 {postsData}
             </div>
 
         </div>)
 }
+
+const AddPostForm = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div><Field component={Textarea} name="newPostBody" placeholder='Enter your post...'
+                validate={[required, maxLengthCreator(30)]} /></div>
+            <div><button>Add</button></div>
+        </form>
+    )
+}
+
+const AddPostFormHOC = reduxForm({ form: "addPostForm" })(AddPostForm);
 
 export default MyPosts;
